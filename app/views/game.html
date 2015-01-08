@@ -5,13 +5,14 @@
   <br>
   <div ng-repeat="x in [0, dimension-1]| makeRange" class="row">
     <div class="col-md-1"></div>
-    <div ng-repeat="y in [0, dimension-1]| makeRange" class="col-md-1 mine covered box-{{x}}-{{y}}" ng-click="boxClicked(x,y)" ng-right-click="setFlagged(x,y)">
+    <div ng-repeat="y in [0, dimension-1]| makeRange" class="col-md-1 mine covered box-{{x}}-{{y}} btn btn-default" ng-click="boxClicked(x,y)" ng-right-click="setFlagged(x,y)">
       <span class="hidden"><label>{{board[x][y]}}</label></span><div class="flag glyphicon"></div>
     </div>
   </div>
   <br>
   <div class="row">
     <button class="btn btn-lg btn-success center-block" ng-click="resetGame()">Restart</button>
+    <br>
   </div>
 </div>
 <link rel="stylesheet" href="styles/game.css">

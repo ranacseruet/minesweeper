@@ -20,18 +20,19 @@
   -o-user-select: none;
   user-select: none;
 }
+
 .covered{
-  background-color: #007069;
+  background-color: #b3b3b3;
 }
+
 .uncovered{
   background-color: #ffffff;
 }
-.flagged {
-  background-color: #006600;
-}
+
 .crash {
   background-color: #FF0000;
 }
+
 .glyphicon{
   display: table-cell;
   text-align: center;
