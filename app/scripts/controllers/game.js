@@ -74,7 +74,7 @@ function GameController($scope, $rootScope, edgeTraveler)
       $scope.status = 'success';
     }
     angular.element('.mine').removeClass('covered').addClass('uncovered');
-    angular.element('.mine span').removeClass('hidden')
+    angular.element('.mine span').removeClass('hidden');
   };
 
   //show the value of the box to user
