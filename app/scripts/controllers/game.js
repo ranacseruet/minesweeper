@@ -75,7 +75,7 @@ function GameController($scope)
   $scope.unCover = function(x, y){
 
     if(x >= 0 && x < $scope.dimension && y >= 0 && y < $scope.dimension &&
-      angular.element('.box-' + x + '-' + y).hasClass("covered")) {
+      angular.element('.box-' + x + '-' + y).hasClass('covered')) {
 
       angular.element('.box-' + x + '-' + y).removeClass('covered').addClass('uncovered');
 
@@ -90,7 +90,6 @@ function GameController($scope)
         $scope.unCover(x + 1, y + 1);
       }
       var currentlyUncovered  = angular.element('.mine.uncovered').length;
-      console.log("Max: "+$scope.maximumUncoverLimit+" and current: "+currentlyUncovered);
       if(currentlyUncovered >= $scope.maximumUncoverLimit){
         $scope.gameOver(x,y);
       }
