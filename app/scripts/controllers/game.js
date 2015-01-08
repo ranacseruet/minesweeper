@@ -15,7 +15,7 @@ function Board(dimension, numOfMine)
   //update a specified box counter
   this.updateCounter = function(x, y) {
     if(x >=0 && x< this.dimension && y>=0 &&
-       y<this.dimension && this.boardMatrix[x][y]!='*') {
+       y<this.dimension && this.boardMatrix[x][y]!=='*') {
       this.boardMatrix[x][y]++;
     }
   };
@@ -30,10 +30,10 @@ function Board(dimension, numOfMine)
   }
 
   //set specified number of mines
-  for(var i=0; i<this.numOfMine;i++){
-    var x = parseInt((Math.random()*10)%8);
-    var y = parseInt((Math.random()*10)%8);
-    if(this.boardMatrix[x][y] == '*'){
+  for(i=0; i<this.numOfMine;i++){
+    var x = parseInt((Math.random()*10)%this.dimension);
+    var y = parseInt((Math.random()*10)%this.dimension);
+    if(this.boardMatrix[x][y] === '*'){
       //if its already been set as mine, try for a new one
       i--;
       continue;
@@ -53,6 +53,79 @@ function Board(dimension, numOfMine)
   }
 }
 
+function GameController($scope)
+{
+  var numOfMine = 8;
+  $scope.dimension = 8;
+  $scope.maximumUncoverLimit = ($scope.dimension*$scope.dimension)-numOfMine;
+
+  //game finished. check for success/fail
+  $scope.gameOver = function(x, y) {
+    if($scope.board[x][y] === '*'){
+      angular.element('.box-'+x+'-'+y).removeClass('covered').addClass('crash');
+      $scope.status = 'fail';
+    }
+    else{
+      $scope.status = 'success';
+    }
+    angular.element('.mine').removeClass('covered').addClass('uncovered');
+  };
+
+  //show the value of the box to user
+  $scope.unCover = function(x, y){
+
+    if(x >= 0 && x < $scope.dimension && y >= 0 && y < $scope.dimension &&
+      angular.element('.box-' + x + '-' + y).hasClass("covered")) {
+
+      angular.element('.box-' + x + '-' + y).removeClass('covered').addClass('uncovered');
+
+      if ($scope.board[x][y] === 0) {
+        $scope.unCover(x - 1, y - 1);
+        $scope.unCover(x - 1, y);
+        $scope.unCover(x - 1, y + 1);
+        $scope.unCover(x, y - 1);
+        $scope.unCover(x, y + 1);
+        $scope.unCover(x + 1, y - 1);
+        $scope.unCover(x + 1, y);
+        $scope.unCover(x + 1, y + 1);
+      }
+      var currentlyUncovered  = angular.element('.mine.uncovered').length;
+      console.log("Max: "+$scope.maximumUncoverLimit+" and current: "+currentlyUncovered);
+      if(currentlyUncovered >= $scope.maximumUncoverLimit){
+        $scope.gameOver(x,y);
+      }
+    }
+  };
+
+  //event handler upon clicking a specific box
+  $scope.boxClicked = function(x, y){
+
+    if($scope.board[x][y] === '*'){
+      //TODO verify success status
+      $scope.gameOver(x, y);
+    }
+    else {
+      $scope.unCover(x, y);
+    }
+  };
+
+  //set flagged status for suspicious box
+  $scope.setFlagged = function(x,y){
+    angular.element('.box-'+x+'-'+y+' div.flag').addClass('glyphicon-flag');
+  };
+
+  //initialize game
+  $scope.resetGame = function() {
+    $scope.status = '';
+    angular.element('.mine').removeClass('uncovered crash').addClass('covered');
+    angular.element('.mine div.flag').removeClass('glyphicon-flag');
+    $scope.board = [];
+    $scope.board = new Board($scope.dimension, numOfMine).boardMatrix;
+  };
+
+  $scope.resetGame();
+}
+
 
 /**
  * @ngdoc function
@@ -63,74 +136,5 @@ function Board(dimension, numOfMine)
  */
 var app = angular.module('minesweeperApp');
 
-//directive to loop over specified range
-app.filter('makeRange', function() {
-    return function(inp) {
-      var range = [+inp[1] && +inp[0] || 0, +inp[1] || +inp[0]];
-      var min = Math.min(range[0], range[1]);
-      var max = Math.max(range[0], range[1]);
-      var result = [];
-      for (var i = min; i <= max; i++) result.push(i);
-      if (range[0] > range[1]) result.reverse();
-      return result;
-    };
-  });
-
-//directive for mouse right click event
-app.directive('ngRightClick', function($parse) {
-    return function(scope, element, attrs) {
-      var fn = $parse(attrs.ngRightClick);
-      element.bind('contextmenu', function(event) {
-        scope.$apply(function() {
-          event.preventDefault();
-          fn(scope, {$event:event});
-        });
-      });
-    };
-  });
-
 //The main game controller definition and activity
-app.controller('GameCtrl', function ($scope) {
-    var numOfMine = 3;
-    $scope.status = "";
-    //TODO check variation
-    $scope.dimension = 7;
-    $scope.board = new Board($scope.dimension, numOfMine).boardMatrix;
-
-    //game finished. check for success/fail
-    $scope.gameOver = function(x, y) {
-      angular.element(".box-"+x+"-"+y).removeClass("covered").addClass("crash");
-      if($scope.board[x][y] == '*'){
-        $scope.status = "fail";
-        angular.element(".mine").removeClass("covered").addClass("uncovered");
-      }
-      else{
-        $scope.status = "success";
-      }
-    };
-
-    //event handler upon clicking a specific box
-    $scope.boxClicked = function(x, y){
-      if($scope.board[x][y] == '*' || angular.element(".mine.covered").length <=0 ||
-        angular.element(".mine.uncovered, .mine .glyphicon-flag").length >=($scope.dimension*$scope.dimension)-1){
-        //TODO verify success status
-        $scope.gameOver(x,y);
-      }
-      else {
-        angular.element(".box-" + x + "-" + y).removeClass("covered").addClass("uncovered");
-      }
-    };
-
-    //set flagged status for suspicious box
-    $scope.setFlagged = function(x,y){
-      angular.element(".box-"+x+"-"+y+" div.flag").addClass("glyphicon-flag");
-    };
-
-    $scope.resetGame = function() {
-      $scope.status = "";
-      angular.element(".mine").removeClass("uncovered crash").addClass("covered");
-      $scope.board = [];
-      $scope.board = new Board($scope.dimension, numOfMine).boardMatrix;
-
-    }
-});
+app.controller('GameCtrl', GameController);
