@@ -1,0 +1,40 @@
+.mine{
+  border: 1px solid #006600;
+  height: 50px;
+  margin: 5px;
+  display: table;
+}
+.mine span{
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  font-family: Helvetica, Arial;
+  font-weight: bold;
+  color: #007069;
+
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}
+.covered{
+  background-color: #007069;
+}
+.uncovered{
+  background-color: #ffffff;
+}
+.flagged {
+  background-color: #006600;
+}
+.crash {
+  background-color: #FF0000;
+}
+.glyphicon{
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  color: #ffffff;
+}
