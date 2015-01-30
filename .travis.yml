@@ -7,7 +7,7 @@ before_script:
 deploy:
   provider: heroku
   api_key:
-    secure: FW3RxqpHB6SFkDxkVf0xORFNWoGPPR2jzFw3ObREa8trFRxp99E6JRUmJRgsWlnIe/fbFB47fiESJdwr9689UT2kRd4Y1Tc/SB9eYT4HEQWFqNF7x/u1z2ejJhtOuVnNLRzH/OtwgOipXHw71rFF2nxo8n34vwg3Yzoronydm58=
-  app: minesweeper
+    secure: MPVPrTxBDZ3lpxUkOFTFKfvsRnUydjpnnirXEEgHenQ7N6D4OrRO6RKmtqBrCShsb9NkRrnYgX65i54vkpDZV9AxTNZ5qzORpGsKcHfe5bwZeBy1lelBbV3leXEcFq9AWNtQ/0qsGIG8VuPHfw60xgDkQMkxEiZlDnZ7gY3esHQ=
+  app: minesweeper-test
   on:
     repo: ranacseruet/minesweeper
