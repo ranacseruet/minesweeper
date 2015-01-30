@@ -1,6 +1,13 @@
 language: node_js
 node_js:
-  - '0.10'
+- '0.10'
 before_script:
-  - 'npm install -g bower grunt-cli'
-  - 'bower install'
+- npm install -g bower grunt-cli
+- bower install
+deploy:
+  provider: heroku
+  api_key:
+    secure: FW3RxqpHB6SFkDxkVf0xORFNWoGPPR2jzFw3ObREa8trFRxp99E6JRUmJRgsWlnIe/fbFB47fiESJdwr9689UT2kRd4Y1Tc/SB9eYT4HEQWFqNF7x/u1z2ejJhtOuVnNLRzH/OtwgOipXHw71rFF2nxo8n34vwg3Yzoronydm58=
+  app: minesweeper
+  on:
+    repo: ranacseruet/minesweeper
