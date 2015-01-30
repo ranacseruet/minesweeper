@@ -1,6 +1,6 @@
 # minesweeper
 A HTML5 Minesweeper game
-
+[![Build Status](https://travis-ci.org/ranacseruet/minesweeper.svg)](https://travis-ci.org/ranacseruet/minesweeper)
 
 #Build
 Make sure you have [npm](https://www.npmjs.com), [grunt](http://gruntjs.com/) and [bower](http://bower.io/) installed. \
