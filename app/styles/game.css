@@ -3,7 +3,20 @@
   height: 50px;
   margin: 5px;
   display: table;
+  table-layout: fixed;
+  
 }
+.starMine{
+	background: url('../../images/mine1.png') no-repeat center center;
+	width: 20px;
+	height: 20px;
+	background-size:100% auto;
+}
+
+.starMine .board{
+	display: none;
+}
+
 .mine span{
   display: table-cell;
   text-align: center;
