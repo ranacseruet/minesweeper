@@ -7,7 +7,7 @@
   
 }
 .starMine{
-	background: url('../../images/mine1.png') no-repeat center center;
+	background: url('../images/mine1.png') no-repeat center center;
 	width: 20px;
 	height: 20px;
 	background-size:100% auto;
