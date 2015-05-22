@@ -1,5 +1,6 @@
 'use strict';
 
+var starMine = '*';
 /**
  * Definition of the Board class
  * @param dimension
@@ -16,7 +17,7 @@ function Board(dimension, numOfMine, edgeTraveler)
   //update a specified box counter
   this.updateCounter = function(x, y) {
     if(x >=0 && x< me.dimension && y>=0 &&
-       y<me.dimension && me.boardMatrix[x][y]!=='*') {
+       y<me.dimension && me.boardMatrix[x][y]!==starMine) {
       me.boardMatrix[x][y]++;
     }
   };
@@ -34,13 +35,13 @@ function Board(dimension, numOfMine, edgeTraveler)
   for(i=0; i<this.numOfMine;i++) {
     var x = parseInt((Math.random()*10)%this.dimension);
     var y = parseInt((Math.random()*10)%this.dimension);
-    if(this.boardMatrix[x][y] === '*'){
+    if(this.boardMatrix[x][y] === starMine){
       //if its already been set as mine, try for a new one
       i--;
       continue;
     }
 
-    this.boardMatrix[x][y] = '*';
+    this.boardMatrix[x][y] = starMine;
 
     //update all 8 attached box counters
     edgeTraveler(x, y, this.updateCounter);
@@ -66,7 +67,7 @@ function GameController($scope, $rootScope, edgeTraveler)
 
   //game finished. check for success/fail
   $scope.gameOver = function(x, y) {
-    if($scope.board[x][y] === '*') {
+    if($scope.board[x][y] === starMine) {
       angular.element($scope.getBoxClass(x, y)).removeClass('covered').addClass('crash');
       $scope.status = 'fail';
     }
@@ -101,7 +102,7 @@ function GameController($scope, $rootScope, edgeTraveler)
   //event handler upon clicking a specific box
   $scope.boxClicked = function(x, y) {
 
-    if($scope.board[x][y] === '*'){
+    if($scope.board[x][y] === starMine){
       //TODO verify success status
       $scope.gameOver(x, y);
     }
